@@ -17,7 +17,7 @@ intents.members = True
 description = 'A personal discord bot.'
 prefix = commands.when_mentioned_or('?')
 
-initial_extensions = ['cogs.meta']
+initial_extensions = ['cogs.meta', 'cogs.admin', 'cogs.fun']
 
 bot = commands.Bot(command_prefix=prefix, description=description, intents=intents)
 
