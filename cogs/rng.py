@@ -34,7 +34,7 @@ class RNG(commands.Cog, name="RNG"):
     async def flip(self, ctx):
         """Flip a coin."""
 
-        await ctx.send(f'`{random.choice(['HEADS', 'TAILS'])}`')
+        await ctx.send(f'{random.choice(['HEADS', 'TAILS'])}')
 
     @commands.command()
     async def choose(self, ctx, *choices):
@@ -45,6 +45,17 @@ class RNG(commands.Cog, name="RNG"):
             return await ctx.send('Not enough choices.')
 
         await ctx.send(random.choice(choices))
+
+    @commands.command()
+    async def roll(self, ctx, dice: str):
+        """Roll a die (or some dice) in NdN format."""
+        try:
+            rolls, limit = map(int, dice.split('d'))
+        except Exception:
+            await ctx.send('Format must be NdN!')
+            return
+        result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
+        await ctx.send(result)
 
     @commands.command()
     async def number(self, ctx, minimum: int = 0, maximum: int = 1000):
