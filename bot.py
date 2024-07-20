@@ -24,7 +24,8 @@ initial_extensions = (
     'cogs.admin',
     'cogs.fun',
     'cogs.meta',
-    'cogs.rng',
+    'cogs.mod',
+    'cogs.rng'
 )
 
 bot = commands.Bot(command_prefix=prefix,

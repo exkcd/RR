@@ -4,7 +4,7 @@ from discord.ext import commands
 import aiohttp
 
 
-class Fun(commands.Cog):
+class Fun(commands.Cog, name="Fun"):
     """Some fun commands."""
 
     def __init__(self, bot):
