@@ -19,7 +19,7 @@ class Fun(commands.Cog):
                     await ctx.send('No cat found :(')
 
                 js = await resp.json()
-                await ctx.send(embed=discord.Embed().set_image(url=js[0]['url']))
+                await ctx.send(embed=discord.Embed(colour=discord.Colour.blurple()).set_image(url=js[0]['url']))
 
     @commands.command()
     async def dog(self, ctx):
@@ -30,7 +30,7 @@ class Fun(commands.Cog):
                     await ctx.send('No cat found :(')
 
                 js = await resp.json()
-                await ctx.send(embed=discord.Embed().set_image(url=js[0]['url']))
+                await ctx.send(embed=discord.Embed(colour=discord.Colour.blurple()).set_image(url=js[0]['url']))
 
 
 async def setup(bot):
