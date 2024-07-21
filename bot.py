@@ -24,7 +24,6 @@ initial_extensions = (
     'cogs.admin',
     'cogs.fun',
     'cogs.meta',
-    'cogs.mod',
     'cogs.rng'
 )
 
