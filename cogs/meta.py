@@ -205,7 +205,7 @@ class Meta(commands.Cog, name="Meta"):
         await ctx.send(embed=e)
 
     @commands.command(aliases=['server', 'guildinfo'])
-    async def serverinfo(self, ctx, *, guild_id: int = None):
+    async def serverinfo(self, ctx):
         """Shows info about this server."""
 
         guild = ctx.guild
