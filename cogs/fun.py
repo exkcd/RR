@@ -91,12 +91,12 @@ class Fun(commands.Cog, name="Fun"):
     async def feelsbad(self, ctx):
         """feelsbadman"""
 
-        await ctx.send(embed=discord.Embed().set_image(url='https://i.imgur.com/aSVjtu7.png'))
+        await ctx.send('https://tenor.com/view/lilo-and-stitch-stitch-rain-no-sad-gif-4029226')
 
     @commands.command()
     async def feelsgood(self, ctx):
         """feelsgoodman"""
         
-        await ctx.send(embed=discord.Embed().set_image(url='https://media1.tenor.com/m/BvIvARKLrkQAAAAC/tobey-maguire-spiderman.gif'))
+        await ctx.send('https://media1.tenor.com/m/BvIvARKLrkQAAAAC/tobey-maguire-spiderman.gif')
 async def setup(bot):
     await bot.add_cog(Fun(bot))
