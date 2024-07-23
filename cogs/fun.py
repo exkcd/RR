@@ -3,7 +3,6 @@ from discord.ext import commands
 
 import aiohttp
 import random
-import inspect
 
 
 class Fun(commands.Cog, name="Fun"):
@@ -33,6 +32,41 @@ class Fun(commands.Cog, name="Fun"):
 
                 js = await resp.json()
                 await ctx.send(embed=discord.Embed().set_image(url=js[0]['url']))
+
+    @commands.command()
+    async def quote(self, ctx):
+        """Grabs a random quote. Source: monkeytype.com"""
+
+        async with aiohttp.ClientSession() as session:
+            async with session.get('https://raw.githubusercontent.com/monkeytypegame/monkeytype/master/frontend/static/quotes/english.json') as resp:
+                if resp.status != 200:
+                    await print('No quote found :(')
+
+                js = await resp.json(content_type='text/plain')
+
+                async def format_quote():
+                    
+                    quote_source = f' - {js['quotes'][rq]['source']}'
+
+                    quote_text = f'{js['quotes'][rq]['text']}'
+
+                    embed = discord.Embed()
+
+                    embed.add_field(name=quote_text, value=quote_source)
+
+                    await ctx.send(embed=embed)
+
+                rq = random.randint(0, len(js['quotes']))
+
+                if js['quotes'][rq]['length'] < 256:
+                    pass
+
+                else:
+                    rq = random.randint(0, len(js['quotes']))
+
+                await format_quote()
+
+
 
     @commands.command()
     async def love(self, ctx):
