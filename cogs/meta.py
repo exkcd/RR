@@ -25,7 +25,7 @@ class FrontPageSource(HelpEmbed):
             value=(
                 "I am a bot made by Rey (exkcd). I am a pretty basic bot used mainly for fun and "
                 " to hone the skills of the Python programming language.\n"
-                "You can view my code on [GitHub](https://github.com/exkcd/winston)"
+                "You can view my code on [GitHub](https://github.com/exkcd/winston)."
             ),
             inline=True
         )
@@ -107,7 +107,7 @@ class HelpMenu(commands.HelpCommand):
         alias = command.aliases
 
         if alias:
-            embed.description = f'**Aliases**: [{('|').join(alias)}]'
+            embed.add_field(name="Aliases", value=f'[{('|').join(alias)}]', inline=False)
         if cog := command.cog:
             embed.add_field(name="Category", value=cog.qualified_name)
 

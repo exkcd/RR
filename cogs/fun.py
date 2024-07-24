@@ -44,29 +44,20 @@ class Fun(commands.Cog, name="Fun"):
 
                 js = await resp.json(content_type='text/plain')
 
-                async def format_quote():
-                    
-                    quote_source = f' - {js['quotes'][rq]['source']}'
-
-                    quote_text = f'{js['quotes'][rq]['text']}'
-
-                    embed = discord.Embed()
-
-                    embed.add_field(name=quote_text, value=quote_source)
-
-                    await ctx.send(embed=embed)
-
                 rq = random.randint(0, len(js['quotes']))
 
-                if js['quotes'][rq]['length'] < 256:
-                    pass
+                embed = discord.Embed()
 
-                else:
-                    rq = random.randint(0, len(js['quotes']))
+                quote = (
+                    f"""
+                    **{js['quotes'][rq]['text']}**
+                    \u2013 {js['quotes'][rq]['source']}
+                    """
+                )
 
-                await format_quote()
+                embed.add_field(name='', value=quote)
 
-
+                await ctx.send(embed=embed)
 
     @commands.command()
     async def love(self, ctx):
@@ -87,16 +78,18 @@ class Fun(commands.Cog, name="Fun"):
 
         await ctx.send('http://i.imgur.com/BuTKSzf.png')
 
-    @commands.command()
+    @commands.command(hidden=True)
     async def feelsbad(self, ctx):
         """feelsbadman"""
 
         await ctx.send('https://tenor.com/view/lilo-and-stitch-stitch-rain-no-sad-gif-4029226')
 
-    @commands.command()
+    @commands.command(hidden=True)
     async def feelsgood(self, ctx):
         """feelsgoodman"""
-        
+
         await ctx.send('https://media1.tenor.com/m/BvIvARKLrkQAAAAC/tobey-maguire-spiderman.gif')
+
+
 async def setup(bot):
     await bot.add_cog(Fun(bot))
