@@ -59,6 +59,26 @@ class Fun(commands.Cog, name="Fun"):
 
                 await ctx.send(embed=embed)
 
+    @commands.command(hidden=True)
+    async def hug(self, ctx, user: discord.Member, intensity: int = 1):
+        """Hug a user. Up to 10 intensity levels."""
+        name = f'*{user.display_name}*'
+
+        if intensity <= 0:
+            msg = "(っ˘̩╭╮˘̩)っ" + name
+        elif intensity <= 3:
+            msg = "(っ´▽｀)っ" + name
+        elif intensity <= 6:
+            msg = "(っ´▽｀)っ" + name
+        elif intensity <= 9:
+            msg = "(つ≧▽≦)つ" + name
+        elif intensity >= 10:
+            msg = "(づ￣ ³￣)づ{} ⊂(´・ω・｀⊂)".format(name)
+        else:
+            raise RuntimeError
+
+        await ctx.send(msg)
+
     @commands.command()
     async def love(self, ctx):
         """what is love?"""

@@ -14,11 +14,11 @@ class RPS(Enum):
 class RPSParser:
     def __init__(self, argument):
         argument = argument.lower()
-        if argument == 'rock':
+        if argument == 'rock' or 'r':
             self.choice = RPS.rock
-        elif argument == 'paper':
+        elif argument == 'paper' or 'p':
             self.choice = RPS.paper
-        elif argument == 'scissors':
+        elif argument == 'scissors' or 's':
             self.choice = RPS.scissors
         else:
             self.choice = None
@@ -36,8 +36,14 @@ class RNG(commands.Cog, name="RNG"):
 
         await ctx.send(f'{random.choice(['HEADS', 'TAILS'])}')
 
-    @commands.command()
-    async def choose(self, ctx, *choices):
+    @commands.group()
+    async def random(self, ctx):
+        """Random commands."""
+        if ctx.invoked_subcommand is None:
+            await ctx.send(f'Incorrect random subcommand passed. Try {ctx.prefix}help random')
+
+    @random.command()
+    async def choice(self, ctx, *choices):
         """Choose between some choices.
         Multiple choices must be denoted with double quotes."""
 
@@ -46,18 +52,7 @@ class RNG(commands.Cog, name="RNG"):
 
         await ctx.send(random.choice(choices))
 
-    @commands.command()
-    async def roll(self, ctx, dice: str):
-        """Roll a die (or some dice) in NdN format."""
-        try:
-            rolls, limit = map(int, dice.split('d'))
-        except Exception:
-            await ctx.send('Format must be NdN!')
-            return
-        result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
-        await ctx.send(result)
-
-    @commands.command()
+    @random.command()
     async def number(self, ctx, minimum: int = 0, maximum: int = 1000):
         """Displays a random number within a range. Maximum default is 1000."""
 
@@ -67,7 +62,7 @@ class RNG(commands.Cog, name="RNG"):
             return
         await ctx.send(str(random.randint(minimum, maximum)))
 
-    @commands.command()
+    @random.command()
     async def lenny(self, ctx):
         """Displays a random lenny face."""
 
@@ -87,25 +82,44 @@ class RNG(commands.Cog, name="RNG"):
 
         await ctx.send(lenny)
 
-    @commands.command()
-    async def hug(self, ctx, user: discord.Member, intensity: int = 1):
-        """Hug a user. Up to 10 intensity levels."""
-        name = f'*{user.display_name}*'
+    @commands.group()
+    async def roll(self, ctx):
+        """Roll a die (or some dice) in NdN format."""
+        if ctx.invoked_subcommand is None:
+            await ctx.send(f'Incorrect roll command passed. Try {ctx.prefix}help roll.')
 
-        if intensity <= 0:
-            msg = "(っ˘̩╭╮˘̩)っ" + name
-        elif intensity <= 3:
-            msg = "(っ´▽｀)っ" + name
-        elif intensity <= 6:
-            msg = "(っ´▽｀)っ" + name
-        elif intensity <= 9:
-            msg = "(つ≧▽≦)つ" + name
-        elif intensity >= 10:
-            msg = "(づ￣ ³￣)づ{} ⊂(´・ω・｀⊂)".format(name)
-        else:
-            raise RuntimeError
 
-        await ctx.send(msg)
+    @roll.command()
+    async def dice(self, ctx, dice: str):
+        """Basic dice rolls."""
+        try:
+            rolls, limit = map(int, dice.split('d'))
+        except Exception:
+            await ctx.send('Format must be NdN!')
+            return
+        result = ', '.join(str(random.randint(1, limit)) for r in range(rolls))
+
+        await ctx.send(result)
+
+    @roll.command()
+    async def total(self, ctx, dice: str):
+        """Totals the dice rolls you've made."""
+
+        try:
+            rolls, limit = map(int, dice.split('d'))
+        except Exception:
+            await ctx.send('Format must be NdN!')
+            return
+        
+        dice_rolls = [str(random.randint(1, limit)) for r in range(rolls)]
+        
+        result = ', '.join(dice_rolls)
+
+        for i in range(0, len(dice_rolls)):
+            dice_rolls[i] = int(dice_rolls[i])
+        
+
+        await ctx.send(f'{result}\nTotal: {sum(dice_rolls)}')
 
     @commands.command(name='8ball', aliases=['8'])
     async def _8ball(self, ctx, *, question: str):
@@ -146,7 +160,7 @@ class RNG(commands.Cog, name="RNG"):
         player_choice = your_choice.choice
 
         if not player_choice:
-            return ctx.send('Not a valid option. Options: {r}, {p}, {s}'.format(r='rock', p='paper', s='scissors'))
+            return await ctx.send('Not a valid option. Options: {r}, {p}, {s}'.format(r='rock', p='paper', s='scissors'))
 
         bot_choice = random.choice((RPS.rock, RPS.paper, RPS.scissors))
 
