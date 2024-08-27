@@ -202,6 +202,8 @@ class Meta(commands.Cog, name="Meta"):
 
         e.set_thumbnail(url=user.display_avatar.url)
 
+        e.set_footer(text=f'Requested by: {ctx.author}')
+
         await ctx.send(embed=e)
 
     @commands.command(aliases=['server', 'guildinfo'])

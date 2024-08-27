@@ -149,7 +149,7 @@ class RNG(commands.Cog, name="RNG"):
         ]
 
         if question.endswith('?') and question != '?':
-            await ctx.send(f'`{random.choice(responses)}`')
+            await ctx.send(f'{random.choice(responses)}')
         else:
             await ctx.send('Questions must end with a question mark.')
 
